@@ -1,0 +1,96 @@
+{{ if has "zabbix_web" .Values.zabbix_components }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-zabbix-web-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: {{ .Release.Name }}-zabbix-web
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-zabbix-web-deployment
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    reloader.stakater.com/search: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-zabbix-web
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-zabbix-web
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ .Release.Name }}-zabbix-web-container-name
+          image: zabbix/zabbix-web-nginx-mysql:latest
+          imagePullPolicy: Always
+          env:
+            - name: ZBX_SERVER_HOST
+              value: {{ .Release.Name }}-zabbix-server-service
+            - name: DB_SERVER_HOST
+              value: {{ .Release.Name }}-mysql-service
+            - name: DB_SERVER_PORT
+              value: "3306"
+            - name: DB_SERVER_ROOT_USER
+              value: root
+            - name: DB_SERVER_ROOT_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mysql-secret
+                  key: mysql_root_password
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mysql-secret
+                  key: mysql_username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mysql-secret
+                  key: mysql_password
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mysql-secret
+                  key: mysql_database
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mysql-secret
+                  key: mysql_root_password
+          ports:
+            - name: http
+              containerPort: 8080
+          startupProbe:
+            tcpSocket:
+              port: 8080
+            failureThreshold: 120
+            periodSeconds: 1
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 0
+            periodSeconds: 1
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 0
+            periodSeconds: 1
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+{{ end }}
