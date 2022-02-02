@@ -1,0 +1,22 @@
+apiVersion: v1
+entries:
+  zabbix:
+  - apiVersion: v2
+    appVersion: "5.4"
+    created: "2022-02-02T22:43:32.988209397Z"
+    description: Helm chart to install Zabbix.
+    digest: 8637a629414e9bad11d94b49c94bae98dfdad1f9b93a0d00f5009c533d947fe6
+    home: https://github.com/alphabet5/zabbix-helm
+    keywords:
+    - zabbix
+    maintainers:
+    - name: alphabet5
+      url: https://github.com/alphabet5
+    name: zabbix
+    sources:
+    - https://github.com/alphabet5/zabbix-helm
+    type: application
+    urls:
+    - https://github.com/alphabet5/zabbix-helm/releases/download/zabbix-0.0.2/zabbix-0.0.2.tgz
+    version: 0.0.2
+generated: "2022-02-02T22:43:32.833658368Z"
