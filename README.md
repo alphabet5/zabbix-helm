@@ -47,6 +47,6 @@ Place these encrypted secrets into values.yaml.
 ## Add the repo and install Zabbix
 
 ```bash
-helm repo add alphabet5-zabbix https://alphabet5.github.io/zabbix-helm
-helm install zabbix alphabet5-zabbix/zabbix
+helm repo add alphabet5 https://alphabet5.github.io/helm-charts
+helm install zabbix alphabet5/zabbix
 ```
