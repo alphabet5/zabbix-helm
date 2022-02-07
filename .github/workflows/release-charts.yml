@@ -24,6 +24,6 @@ jobs:
         with:
           charts_dir: helm
           charts_repo_url: https://alphabet5.github.io/helm-charts
-          config: cr.yaml
+          git-repo: helm-charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
