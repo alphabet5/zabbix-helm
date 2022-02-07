@@ -28,3 +28,4 @@ jobs:
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           CR_GIT_REPO: "helm-charts"
+          GITHUB_REPOSITORY: "https://github.com/alphabet5/helm-charts"
