@@ -23,7 +23,5 @@ jobs:
         uses: helm/chart-releaser-action@v1.1.0
         with:
           charts_dir: helm
-          charts_repo_url: https://alphabet5.github.io/helm-charts
-          git-repo: helm-charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
