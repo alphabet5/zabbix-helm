@@ -1,6 +1,8 @@
 # zabbix-helm
  Helm Chart for zabbix installation.
 
+ This was used to learn how to write a helm chart. This repository is not maintained and here for reference only.
+
 ## Installation
 
 This documentation has been tested with microk8s. MetalLB is used as the load balancer.
